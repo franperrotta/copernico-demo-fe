@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 
-import settings from './config';
-
 import CuitForm from './components/CuitForm/CuitForm';
 import UserData from './components/UserData/UserData';
 import ObjetosData from './components/ObjetosData/ObjetosData';
@@ -27,10 +25,8 @@ function App() {
     setError(null);
   }
 
-  const isDev = () => process.env.NODE_ENV.trim() === "development" ? settings.dev.BFF : settings.preprod.BFF;
-
   const handleSubmit = (event) => {
-    fetch(`${isDev()}/webbff/sujetos/${cuit}/objetos/obligaciones`)
+    fetch(`${process.env.REACT_APP_BFF}/webbff/sujetos/${cuit}/objetos/obligaciones`, {headers: { accept: 'application/json' }})
       .then(response => response.json())
       .then(
         response => {

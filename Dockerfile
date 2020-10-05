@@ -6,12 +6,14 @@ WORKDIR /app
 COPY package.json /app
 RUN npm install
 COPY . /app
+
+ARG REACT_APP_BFF
+ENV REACT_APP_BFF $REACT_APP_BFF
+
 RUN npm run build
 
 # Stage 2
 FROM nginx:1.17.1-alpine
-
-ENV BFF=http://localhost:3030
 
 EXPOSE 80
 

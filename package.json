@@ -14,9 +14,9 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
-    "build-docker": "docker build --force-rm --rm --no-cache -t front-demo .",
-    "stop-docker": "docker stop front-demo && docker rm front-demo",
-    "start-docker": "docker run -p 4200:80 --name front-demo -d front-demo",
+    "build-docker": "docker build --force-rm --rm --no-cache -t copernico-demo-fe --build-arg REACT_APP_BFF=http://localhost:3030 .",
+    "stop-docker": "docker stop copernico-demo-fe && docker rm copernico-demo-fe",
+    "start-docker": "docker run -p 4200:80 --name copernico-demo-fe -d copernico-demo-fe",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
