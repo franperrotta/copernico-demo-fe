@@ -7,9 +7,6 @@ import ObjetosData from './components/ObjetosData/ObjetosData';
 import ObligacionesData from './components/ObligacionesData/ObligacionesData';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 
-
-require('dotenv').config();
-
 function App() {
  
   const [cuit, setcuit] = useState('');
@@ -17,8 +14,11 @@ function App() {
   const [objetosData, setobjetosData] = useState(null);
   const [obligacionesData, setobligacionesData] = useState(null);
   const [error, setError] = useState(null);
+  const [spinner, setSpinner] = useState(false);
 
   const clean = () => {
+    setSpinner(false);
+    setcuit('');
     setUserData(null);
     setobjetosData(null);
     setobligacionesData(null);
@@ -26,10 +26,13 @@ function App() {
   }
 
   const handleSubmit = (event) => {
-    fetch(`${process.env.REACT_APP_BFF}/webbff/sujetos/${cuit}/objetos/obligaciones`, {headers: { accept: 'application/json' }})
+    event.preventDefault();
+    setSpinner(true);
+    fetch(`${process.env.REACT_APP_BFF.trim()}/webbff/sujetos/${cuit}/objetos/obligaciones`, {headers: { accept: 'application/json' }})
       .then(response => response.json())
       .then(
         response => {
+          setSpinner(false);
           if(response.error) {
             setUserData(null);
             setobjetosData(null);
@@ -43,7 +46,10 @@ function App() {
           }
         }
       )
-      .catch(error => setError(error))
+      .catch(error => {
+        setSpinner(false);
+        setError(error);
+      })
   }
 
   const createTableObjetos = () => objetosData.map((objeto, i) => {
@@ -63,7 +69,7 @@ function App() {
             <td>{objeto['datos_adicionales']}</td>
             <td>{ (objeto['objetosExcepciones']) ? objeto['objetosExcepciones']['motivo'] : null }</td>
             <td> 
-              <button type="button" class="btn btn-light" onClick={(e) => setobligacionesData(objeto['obligaciones'])}>Obligaciones</button>
+              <button type="button" className="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Ver las obligaciones del objeto" onClick={(e) => setobligacionesData(objeto['obligaciones'])}>Obligaciones</button>
             </td>
         </tr>
     )
@@ -101,16 +107,26 @@ function App() {
     )
   });
 
+
+
   return (
     <div>
-      <CuitForm handleSubmit={handleSubmit} cuit={cuit} setcuit={setcuit} clean={clean}/>
-      <div className="data">
-        <UserData userData={userData} />
-        <ObjetosData objetosData={objetosData} createTableObjetos={createTableObjetos}/>
-      </div>
-      <div  className="obligacionData">
-        <ObligacionesData obligacionesData={obligacionesData} createTableObligaciones={createTableObligaciones}/>
-      </div>
+      <CuitForm handleSubmit={handleSubmit} cuit={cuit} setcuit={setcuit} clean={clean} userData={userData} error={error}/>
+      {
+        spinner ? (
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <UserData userData={userData} />
+            <ObjetosData objetosData={objetosData} createTableObjetos={createTableObjetos}/>
+            <ObligacionesData obligacionesData={obligacionesData} createTableObligaciones={createTableObligaciones}/>
+          </div>
+        )
+      }
       <ErrorMessage error={error} />
     </div>
   );

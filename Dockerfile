@@ -7,8 +7,8 @@ COPY package.json /app
 RUN npm install
 COPY . /app
 
-ARG REACT_APP_BFF
-ENV REACT_APP_BFF $REACT_APP_BFF
+ENV PORT=4200
+ENV REACT_APP_BFF=http://localhost:3000
 
 RUN npm run build
 

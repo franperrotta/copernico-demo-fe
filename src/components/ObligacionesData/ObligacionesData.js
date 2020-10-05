@@ -3,6 +3,12 @@ import React from 'react';
 export default function ObligacionesData(props) {
   if(props.obligacionesData) {
     return (
+      <React.Fragment>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item active" aria-current="page">OBLIGACIONES</li>
+          </ol>
+        </nav>
         <table className="table table-dark obligacionesTable">
             <thead>
                 <tr>
@@ -37,6 +43,7 @@ export default function ObligacionesData(props) {
                 {props.createTableObligaciones()}
             </tbody>
         </table>
+      </React.Fragment>
     );
   } else {
     return null;
