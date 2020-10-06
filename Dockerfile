@@ -1,6 +1,11 @@
 # Step 1
 FROM node:10-alpine as build-step
 
+# Set the same time Zone from Host
+RUN ln -sf /usr/share/zoneinfo/Etc/GMT+3  /etc/localtime
+RUN echo "America/Argentina/Cordoba" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 RUN mkdir /app
 WORKDIR /app
 COPY package.json /app
@@ -14,6 +19,11 @@ RUN npm run build
 
 # Stage 2
 FROM nginx:1.17.1-alpine
+
+# Set the same time Zone from Host
+RUN ln -sf /usr/share/zoneinfo/Etc/GMT+3  /etc/localtime
+RUN echo "America/Argentina/Cordoba" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 EXPOSE 80
 
