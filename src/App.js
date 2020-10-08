@@ -66,7 +66,7 @@ function App() {
             <td>{objeto['base_imponible']}</td>
             <td>{objeto['etiquetas']}</td>
             <td>{objeto['id_externo']}</td>
-            <td>{objeto['datos_adicionales'].SOJ_DETALLES}</td>
+            <td>{objeto['datos_adicionales'] ? objeto['datos_adicionales'].SOJ_DETALLES : null}</td>
             <td>{ (objeto['objetosExcepciones']) ? objeto['objetosExcepciones']['motivo'] : null }</td>
             <td> 
               <button type="button" className="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Ver las obligaciones del objeto" onClick={(e) => setobligacionesData(objeto['obligaciones'])}>Obligaciones</button>
@@ -116,7 +116,7 @@ function App() {
         spinner ? (
           <div className="d-flex justify-content-center">
             <div className="spinner-border" role="status">
-              <span class="sr-only">Loading...</span>
+              <span className="sr-only">Loading...</span>
             </div>
           </div>
         ) : (
