@@ -13,6 +13,7 @@ export default function ObjetosData(props) {
             <thead>
                 <tr>
                 <th scope="col">Objeto</th>
+                <th scope="col">Obligaciones</th>
                 <th scope="col">tipo</th>
                 <th scope="col">categoria</th>
                 <th scope="col">descripcion</th>
@@ -25,7 +26,6 @@ export default function ObjetosData(props) {
                 <th scope="col">id_externo</th>
                 <th scope="col">datos_adicionales</th>
                 <th scope="col">Motivo de excepcion</th>
-                <th scope="col">Obligaciones</th>
                 </tr>
             </thead>
             <tbody>

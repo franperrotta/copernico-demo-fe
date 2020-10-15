@@ -56,6 +56,9 @@ function App() {
     return(
         <tr key={i}>
             <td>{objeto['id']}</td>
+            <td> 
+              <button type="button" className="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Ver las obligaciones del objeto" onClick={(e) => setobligacionesData(objeto['obligaciones'])}>Obligaciones</button>
+            </td>
             <td>{objeto['tipo']}</td>
             <td>{objeto['categoria']}</td>
             <td>{objeto['descripcion']}</td>
@@ -68,9 +71,6 @@ function App() {
             <td>{objeto['id_externo']}</td>
             <td>{objeto['datos_adicionales'] ? objeto['datos_adicionales'].SOJ_DETALLES : null}</td>
             <td>{ (objeto['objetosExcepciones']) ? objeto['objetosExcepciones']['motivo'] : null }</td>
-            <td> 
-              <button type="button" className="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Ver las obligaciones del objeto" onClick={(e) => setobligacionesData(objeto['obligaciones'])}>Obligaciones</button>
-            </td>
         </tr>
     )
   });
